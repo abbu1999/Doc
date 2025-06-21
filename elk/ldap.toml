@@ -1,0 +1,110 @@
+verbose_logging = true
+
+[[servers]]
+
+host = "ldap.ke.corp.airtel.africa"
+port = 389
+
+use_ssl = false
+
+start_tls = false
+
+ssl_skip_verify = false
+
+bind_dn = "CN=svc_aa_grafana,OU=ServiceAccounts,DC=corp,DC=airtel,DC=africa"
+bind_password = "Wipro@123456789"
+
+search_filter = "(sAMAccountName=%s)"
+
+search_base_dns = ["DC=corp,DC=airtel,DC=africa"]
+[servers.attributes]
+
+name = "Name"
+
+surname = "sn"
+
+username = "cn"
+
+member_of = "memberOf"
+
+email = "mail"
+
+[[servers.group_mappings]]
+group_dn = "CN=grafana_editor,CN=Users,DC=corp,DC=airtel,DC=africa"
+org_role = "Editor"
+
+[[servers.group_mappings]]
+group_dn = "CN=AA_Users_All,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=VPN-Airtel-Employee-Global,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=KE-VPN-Partner-Airtel-Apps-Ops,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=KE-VPN-Partner-Wipro,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=WiFi-Employees,OU=Others,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=PROXY_NG_OFFICE,OU=Proxy,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=PROXY_UG_OFFICE,OU=Proxy,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=KE-VPN-Partner-RNS,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=KE-VPN-Employees-AADL-Devops,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=CG-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=VPN-Airtel-Associates-Global,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=NE-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=TD-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=GA-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=TZ-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=NG-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=ZM-VPN-Employees-IT,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=NG-VPN-Partner-Operation-Enterprise,OU=VPN,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"
+
+[[servers.group_mappings]]
+group_dn = "CN=AA-VROPS-FULL,OU=Others,OU=Security Groups,OU=Groups,OU=NonAUUID,DC=corp,DC=airtel,DC=africa"
+org_role = "Viewer"

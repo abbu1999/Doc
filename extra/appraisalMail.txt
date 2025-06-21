@@ -1,0 +1,49 @@
+1.  What you did
+	
+		Completeness, Quality, & Productivity of deliverables:
+
+			In my last project at Airtel India, I successfully contributed to the completeness, quality, and productivity of deliverables in two key initiatives:
+
+			1. Onboarding the Billing Chater - Dunning Application monitoring, as acknowledged by an appreciation mail from CDIO of airtel India Pradipt Kapoor. This effort ensured seamless monitoring and alerting of the application, meeting all specified requirements and objectives.(Attached: Received email)
+
+			2. Migrating the application from OKD3 to OKD4 container orchestration system, recognized by an appreciation mail from Yatin Kumar, TechOps Leader of Postpaid Airtel India. This effort ensured seamless monitoring and alerting of the application and container orchestration system OKD4 . (Attached: Received email)
+
+		Team Work:
+
+			 I actively contribute to the team's success by providing support and assistance to both Airtel India and Airtel Africa (Airtel Money) team members with any Linux and monitoring setup/tool-related issues. I consistently demonstrate sufficient knowledge of Linux and our monitoring tools, ensuring smooth operations and troubleshooting when needed.
+
+			Additionally, I played a key role in server patching activities for both projects. In the Airtel India project, this was conducted collaboratively at the team level, while in the Airtel Africa project, I took the initiative to perform the patching independently during off-hours from 2:30 am to 10 am. These efforts highlight my dedication to teamwork and proactive problem-solving, contributing to the overall success of our projects
+
+		Communication:
+
+			Throughout the Airtel India project, I effectively managed the diverse requirements of Unoc and Postpaid clients, ensuring seamless collaboration among Network, Linux, Cyberark/Arcos, storage, and Resource Management teams. By initiating regular Zoom/Team calls and maintaining active email correspondence, I fostered an environment of proactive communication, facilitating swift problem-solving and resolution of technical challenges. Additionally, I actively engaged in client meetings and discussions, providing clarity on project progress and addressing any concerns promptly. My adept communication skills and dedication to transparent dialogue were integral in nurturing a cohesive team dynamic and driving successful outcomes across multifaceted project dimensions.
+
+		Mentoring:
+
+			In addition to my core responsibilities in the Airtel India and Airtel Africa projects, I actively engaged in mentoring activities within the team. Leveraging my 3 years of hands-on experience with Linux and monitoring tools such as Elastic, Logstash, Grafana, and Alerting Tools like syrn/watchman into my mentoring efforts. Drawing from this wealth of hands-on knowledge, I guided team members towards efficient utilization of these tools, optimizing workflows, and maximizing productivity.
+
+		Common Professional Etiquette:
+
+			In both the Airtel India and Airtel Africa projects, I upheld and demonstrated common professional etiquette in various aspects of my work. This included:
+
+			1. Effective Communication: I maintained open and transparent communication channels with team members, clients, and stakeholders. I ensured clarity in all interactions and promptly addressed any queries or concerns, fostering a collaborative and supportive environment.
+
+			2. Respectful Collaboration: I valued the perspectives and contributions of all team members, fostering an inclusive environment where everyone felt heard and respected. I actively listened to others, acknowledged their input, and encouraged diverse viewpoints to drive innovation and problem-solving.
+
+			3. Timely Responsiveness: I prioritized timely responses to emails, messages, and requests, demonstrating reliability and professionalism in my communication. This helped in facilitating smooth coordination and ensuring that project activities progressed without delays.
+
+			4. Adaptability and Flexibility: I remained adaptable and flexible in navigating project challenges and changes. I approached unforeseen circumstances with a positive attitude, proactively seeking solutions and adjusting plans as needed to maintain project momentum.
+
+			5. Confidentiality and Integrity: I upheld strict confidentiality regarding sensitive information and data, respecting the privacy and trust of clients and colleagues. I conducted myself with integrity, adhering to ethical standards and professional conduct at all times.
+
+		General Inputs:
+
+			This category can encompass any additional feedback or subjective assessments that don't fit neatly into the other categories.
+
+2.  What we did
+
+		To bolster organizational/Self growth, I suggest embracing DevOps projects. This initiative introduces new learning opportunities for all team members, fosters innovation, and improves efficiency. By integrating DevOps practices, we streamline processes and enhance collaboration, aligning with our commitment to excellence.
+
+3.  What you want to do next
+
+		I aim to enhance my skill set by focusing on Python programming and acquiring proficiency in new DevOps tools. This endeavor will not only improve my technical capabilities but also contribute to the efficiency and quality of my work. Additionally, I'm committed to developing my soft skills to excel in collaboration and communication within the team.

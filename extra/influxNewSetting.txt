@@ -1,0 +1,40 @@
+[meta]
+  dir = "/var/lib/influxdb/meta"
+[data]
+  dir = "/var/lib/influxdb/data"
+  wal-dir = "/var/lib/influxdb/wal"
+  index-version = "tsi1"
+  query-log-enabled = true
+  cache-max-memory-size = "50g"
+  max-concurrent-compactions = 0
+  max-index-log-file-size = "1g"
+  max-series-per-database = 0
+  max-values-per-tag = 0
+  series-id-set-cache-size = 100
+[coordinator]
+   query-timeout = "5s"
+   log-queries-after = "5s"
+   write-timeout = "10s"
+   max-concurrent-queries = 0
+   max-select-point = 0
+   max-select-buckets = 0
+[retention]
+[shard-precreation]
+[monitor]
+[http]
+   enabled = true
+   bind-address = "0.0.0.0:8086"
+   auth-enabled = false
+   realm = "InfluxDB"
+   log-enabled = true
+   write-tracing = false
+   pprof-enabled = true
+   https-enabled = false
+[ifql]
+[logging]
+[subscriber]
+[[graphite]]
+[[collectd]]
+[[opentsdb]]
+[[udp]]
+[continuous_queries]

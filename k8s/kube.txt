@@ -1,0 +1,58 @@
+minikube start --driver=virtualbox --no-vtx-check
+
+kubeadm reset
+sudo apt-get purge kubeadm kubectl kubelet kubernetes-cni kube*   
+sudo apt-get autoremove  
+sudo rm -rf ~/.kube
+
+kubeadm reset -f
+rm -rf /etc/cni /etc/kubernetes /var/lib/dockershim /var/lib/etcd /var/lib/kubelet /var/run/kubernetes ~/.kube/*
+iptables -F && iptables -X
+iptables -t nat -F && iptables -t nat -X
+iptables -t raw -F && iptables -t raw -X
+iptables -t mangle -F && iptables -t mangle -X
+systemctl restart containerd
+
+
+
+
+
+containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
+
+kubeadm init --control-plane-endpoint="10.240.0.12:6443" --apiserver-advertise-address=10.240.0.9 --pod-network-cidr=192.168.0.0/16
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.4/manifests/calico.yaml -O
+kubectl apply -f calico.yaml
+
+
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of control-plane nodes by copying certificate authorities
+and service account keys on each node and then running the following as root:
+
+  kubeadm join 10.240.0.12:6443 --token 5n2njn.ahgzj5aj4myxhu1u \
+        --discovery-token-ca-cert-hash sha256:42f1c03c7ab13b5f57d0151597bb69c8f837cb4bf65a41cb8cd0ebda958d7a00 \
+        --control-plane
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.240.0.12:6443 --token 5n2njn.ahgzj5aj4myxhu1u \
+        --discovery-token-ca-cert-hash sha256:42f1c03c7ab13b5f57d0151597bb69c8f837cb4bf65a41cb8cd0ebda958d7a00
+		
+		
+kubectl cluster-info
+kubectl get nodes
+kubectl get cs		

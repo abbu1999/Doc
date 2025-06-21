@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: fluentd
+  namespace: elastic-stack
+  labels:
+    app: fluentd
+rules:
+  - apiGroups: [""]
+    resources: ["pod", "namespace"]
+    verbs: ["get", "list", "watch"]

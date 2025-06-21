@@ -1,0 +1,11 @@
+To Start Ansible Container
+
+	podman container run -itd --restart=always -v ansible:/root/.ssh -v ansible:/etc/ansible --name=ansible ansible-server:v2
+
+To Go inside the container
+
+	podman container exec -it ansible /bin/bash
+
+To 
+podman commit ansible-server ansible-server:v2
+

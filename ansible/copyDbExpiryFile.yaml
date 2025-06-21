@@ -1,0 +1,63 @@
+---
+- hosts: SC
+  become: true
+  name: Copy DB Password Expiry File Onto All Opco's Logstash 1st Server
+
+  vars:
+    script_dir: /tmp/script
+    python_dir: /tmp/python3.9
+    files_to_download:
+      - { src: http://172.23.0.51/site-packages-AM.tar.gz, dest: "{{ python_dir }}" }
+      - { src: http://172.23.0.51/instantclient-basic-linuxx64.zip, dest: "{{ script_dir }}" }
+      - { src: http://172.23.0.51/dbPasswordExpiry.tar.gz, dest: "{{ script_dir }}" }
+
+  tasks:
+
+    - name: Ensure required directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ script_dir }}"
+        - "{{ python_dir }}"
+
+    - name: Download required files
+      get_url:
+        url: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ files_to_download }}"
+
+    - name: Archive previous site-packages
+      archive:
+        path: "{{ python_dir }}/site-packages"
+        dest: "{{ python_dir }}/site-packages.tar.gz"
+        format: gz
+
+    - name: Unarchive downloaded files
+      unarchive:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: yes
+      loop: "{{ files_to_download }}"
+
+    - name: Ensure LD_LIBRARY_PATH is set in .bashrc
+      lineinfile:
+        path: "{{ script_dir }}/.bashrc"
+        line: 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:{{ script_dir }}/instantclient_23_5/'
+        insertafter: EOF
+        state: present
+      notify: Source bashrc
+
+    - name: Add DB password expiry Python script to cron
+      cron:
+        name: "DB password expiry script"
+        minute: "0"
+        hour: "12"
+        job: "python3.9 {{ script_dir }}/dbPasswordExpiry/dbPasswordExpiry.py"
+        disabled: true
+
+  handlers:
+    - name: Source bashrc
+      shell: source "{{ script_dir }}/.bashrc"
+      args:
+        executable: /bin/bash

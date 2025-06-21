@@ -1,0 +1,9 @@
+volumeClaimTemplates:
+  - metadata:
+      name: es-data
+      namespace: elastic-stack
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi

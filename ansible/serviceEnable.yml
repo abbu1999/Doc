@@ -1,0 +1,32 @@
+---
+- name: Learning Register Veriable
+  hosts: all
+  become: true
+  vars:
+    service:
+      - sshd
+      - firewalld
+  tasks:
+
+    - name: check if services are present
+      shell: |
+        systemctl list-unit-files | grep -E  '{{ item }}'.service | wc -l
+      loop: "{{ service }}"
+      register: service_check
+      ignore_errors: yes
+
+    - debug:
+        #msg: "{{ service_check }}"
+        #msg: "{{ item.stdout_lines.0 }}"
+        msg: "{{ item.stdout_lines.0 }}"
+      loop: "{{ service_check.results }}"
+
+    - name: enable service if present
+      service:
+        name: "{{ item.item }}"
+        enabled: yes
+      when: item.stdout_lines.0 | int >= 1
+      loop: "{{ service_check.results }}"
+
+
+

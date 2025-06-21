@@ -1,0 +1,232 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\begin{center}
+    {\Huge \scshape abhishek} \\ \vspace{1pt}
+    \underline{Rishikesh Uttarakhand,India 249204} \\ \vspace{1pt}
+    \small \raisebox{-0.1\height}\faPhone\ \underline{7830624971} ~ \href{mailto:abhishekbisht559@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{abhishekbisht559@gmail.com}} ~ 
+    \href{linkedin.com/in/abhishek-bisht-1974a8215}{\raisebox{-0.2\height}\faLinkedin\ \underline{linkedin.com/in/abhishek-bisht-1974a8215}}
+    \vspace{-8pt}
+\end{center}
+
+%-----------SUMMARY-----------
+\section{Summary}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     {Dynamic professional with 3 years in ELK and  Prometheus Grafana. Transitioning to DevOps to apply cloud and orchestration skills for efficient, scalable, and reliable software deployment. Passionate about continuous learning and contributing to organizational goals.} \\
+    }}
+ \end{itemize}
+ \vspace{-16pt}
+
+%------Skills-------
+\section{Skills}
+    %\resumeSubHeadingListStart
+        \begin{multicols}{4}
+            \begin{itemize}[itemsep=-5pt, parsep=3pt]
+                \item\small AWS
+                \item Kubernetes
+                \item Ansible
+                \item Docker
+                \item Linux
+                \item Git
+                \item Elasticsearch
+                \item Logstash
+                \item Kibana
+                \item Grafana
+                \item InfluxDB
+                \item Telegraf
+                \item Kafka
+                \item Prometheus
+                \item Python
+                \item Bash Script
+            \end{itemize}
+        \end{multicols}
+        \vspace*{2.0\multicolsep}
+    %\resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Electronics Company}{May 2020 -- August 2020}
+      {Software Engineer Intern}{City, State}
+      \resumeItemListStart
+        \resumeItem{Developed a service to automatically perform a set of unit tests daily on a product in development in order to decrease time needed for team members to identify and fix bugs/issues.}
+        \resumeItem{Incorporated scripts using Python and PowerShell to aggregate XML test results into an organized format and to load the latest build code onto the hardware, so that daily testing can be performed.}
+        \resumeItem{Utilized Jenkins to provide a continuous integration service in order to automate the entire process of loading the latest build code and test files, running the tests, and generating a report of the results once per day.}
+        \resumeItem{Explored ways to visualize and send a daily report of test results to team members  using HTML, Javascript, and CSS.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Startup, Inc}{May 2019 -- August 2019}
+      {Front End Developer Intern}{City, State}
+      \resumeItemListStart
+        \resumeItem{Assisted in development of the front end of a mobile application for iOS/Android using Dart and the Flutter framework.}
+        \resumeItem{Worked with Google Firebase to manage user inputted data across multiple platforms including web and mobile apps.}
+        \resumeItem{Collaborated with team members using version control systems such as Git to organize modifications and assign tasks.}
+        \resumeItem{Utilized Android Studio as a development environment in order to visualize the application in both iOS and Android.}
+    \resumeItemListEnd
+    
+  \resumeSubHeadingListEnd
+\vspace{-16pt}
+
+%-----------ACHIEVEMENTS-----------
+\section{ACHIEVEMENTS}
+    \vspace{-5pt}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Billing Charter -- Dunning Deliverable (Postpaid Airtel India)}}{March 2023}
+          \resumeItemListStart
+            \resumeItem{Member of the team as a monitroing representative who enabled montoring of Billing Charter Dunning application and got appreciation from CDIO of Airtel India : Pradipt Kapoor.}
+          \resumeItemListEnd
+          \vspace{-13pt}
+      \resumeProjectHeading
+         {\textbf{DCAP: 100\% traffic migration on OKD 4 (Payment Gateway Postpaid Airtel India)}}{May 2023}
+          \resumeItemListStart
+            \resumeItem{Member of the team as a monitroing representative who migrated montoring of DCAP application Montoring from OKD3 to OKD4 and got appreciation from AVP of Postpaid LOB Airtel India : Yatin Kumar.}
+          \resumeItemListEnd 
+         
+    \resumeSubHeadingListEnd
+\vspace{-15pt}
+%-----------CERTIFICATES---------------
+\section{CERTIFICATIONS}
+    \resumeSubHeadingListStart
+        \resumeItemListStart
+            \resumeItem{AWS Certified Solutions Architect Associate}$|$ {Udemy}
+            \resumeItem{Kubernetes Certified Application Developer (CKAD)}$|$ {Udemy}
+            \resumeItem{Ansible for the Absolute Beginner}$|$ {Udemy}
+        \resumeItemListEnd
+    \resumeSubHeadingListEnd
+%-----------LANGUAGES---------------
+\section{LANGUAGES}
+    \resumeSubHeadingListStart
+        \resumeItemListStart
+            \resumeItem{English (Professional Working Proficiency)}
+            \resumeItem{Hindi (Full Professional Proficiency)}
+        \resumeItemListEnd
+    \resumeSubHeadingListEnd
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Omkarananda Institute of Management and Technology}{Sep. 2017 -- May 2020}
+      {Bachelor of Science in Information Technology (BSc.IT)}{Rishikesh Uttarakhand,India}
+  \resumeSubHeadingListEnd
+\end{document}

@@ -1,0 +1,120 @@
+7.1.1 --- 7.17.11
+
+
+1. 
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": "primaries"
+  }
+}
+
+2. systemctl stop elasticsearch
+
+3. rpm -Uvh elasticsearch-7.17.11-x86_64.rpm
+
+4. vim /etc/elasticsearch/jvm.options
+
+8-13:-XX:+UseConcMarkSweepGC
+8-13:-XX:CMSInitiatingOccupancyFraction=75
+8-13:-XX:+UseCMSInitiatingOccupancyOnly
+
+
+14-:-XX:+UseG1GC
+14-:-XX:G1ReservePercent=25
+14-:-XX:InitiatingHeapOccupancyPercent=30
+
+5. 	cd /usr/share/elasticsearch/lib/
+	if core log4j aviable then move to other directory
+
+6. systemctl start elasticsearch
+	
+7.
+
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": null
+  }
+}
+
+
+
+curl -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d'
+{
+"transient" :{
+  "cluster.routing.allocation.exclude._ip" : null
+}
+}
+'
+
+
+curl -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d' {   "persistent": {"cluster.routing.allocation.enable": null} } '
+
+
+
+curl -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d' { "transient" :{ "cluster.routing.allocation.include._ip" :"10.222.175.48,10.222.175.49,10.222.175.50,10.222.175.78" } } '
+
+
+"transient" :{ "cluster.routing.allocation.include._ip" :"10.222.175.48,10.222.175.49,10.222.175.50,10.222.175.78" }
+
+
+"10.222.175.48,10.222.175.49,10.222.175.50,10.222.175.78"
+10.222.184.114 Kibana "
+
+
+10.222.175.48
+10.222.175.49
+10.222.175.50
+10.222.175.78
+10.222.184.114 Kibana 
+
+Steps to up Elasticsearch
+	Step 1
+		1) rpm -ivh <package name> in node 1 
+		2) rpm -ivh <package name> in node 2 
+		3) rpm -ivh <package name> in node 3
+		add ES_TMPDIR=/data/elasticsearch/tmp in /etc/sysconfig/elasticsearch file
+	Step 2
+		In node one update data directories with /data
+	Step 3
+		In 1st node enable 
+		cluster.node zm-elasti-cluster
+		node.name   zm-node-1
+		network.host <current host ip>
+		discovery.seed ["zm-node-1"]
+		cluster.intial_master_node ["current host ip"]
+		transport.host: 0.0.0.0
+		service elasticsearch start
+		/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node
+	step 4 
+		Go to node 2
+		bin/elasticsearch-reconfigure-node --enrollment-token <token>
+	Step 5 Go to node 3
+		
+		bin/elasticsearch-reconfigure-node --enrollment-token <token>
+
+	Step 6 
+		Add in all nodes
+		
+		discovery.seed ["zm-node-1", "zm-node-2", "zm-node-3"]
+		cluster.intial_master_node ["current host ip", "2host ip", "3rd host ip"]
+	Step 7
+		Add in node 2 and node 3 
+		cluster.node zm-elasti-cluster
+		node.name   zm-node-1
+		network.host <current host ip>
+Step 8 
+		Reset Elastic default user password
+		/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic
+
+
+curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.7.0-x86_64.rpm
+sudo rpm -vi elastic-agent-8.7.0-x86_64.rpm
+sudo elastic-agent enroll \
+  --fleet-server-es=https://192.168.29.108:9200 \
+  --fleet-server-service-token=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE3MTU4NjQxNzcwMDk6UDJ2d2FxQmRUdy1oZUZIRnpHRmFWZw \
+  --fleet-server-policy=9ef4edb0-1383-11ef-9355-a7b357a54229 \
+  --fleet-server-es-ca-trusted-fingerprint=d4922b9170c8646a6b826e5243623e66b0fd7b19178ca904f3d67c34adc71faa
+sudo systemctl enable elastic-agent
+sudo systemctl start elastic-agent

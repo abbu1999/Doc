@@ -1,0 +1,68 @@
+AbhishekBisht@dev.redgirraffe.com
+
+Your quick response would be appreciated.
+
+KTFI1163@hbctxdom.com
+g6T@AXgR
+
+
+ktfi1176@hbctxdom.com
+
+4@Qa9$@6
+
+
+fdisk /dev/sdb
+press m (for help)
+press n (new to create)
+press p
+press 1
+press enter
+press +100G
+press w
+partprobe 
+
+mkfs.ext4 /dev/sdb1
+blkid /dev/sdb1
+
+mkdir -p /mnt/k8s
+mount /dev/sdb1 /mnt/k8s
+
+/etc/fstab
+uuid /mnt/k8s ext4 defaults 0 0
+
+unmount /mnt/k8s
+
+mount -a
+
+
+fdisk -l /dev/sdb 
+
+
+nfs-utlils
+set on boot time and start with --now flag
+	systemctl enable --now  nfs-server.service
+		port 2049
+		rpcinfo -p | grep nfs
+	chown -R
+
+lb.dev-k8s-rg.com
+master1.dev-k8s-rg.com
+worker1.dev-k8s-rg.com	
+
+
+
+
+	
+10.240.0.12 lb.dev-k8s-rg.com 	dev-k8s-rg.com	lb
+10.240.0.39	master1.dev-k8s-rg.com	dev-k8s-rg.com	master1
+10.240.0.44	worker1.dev-k8s-rg.com	dev-k8s-rg.com	worker1
+		
+apt update && apt install -y kubeadm kubelet kubectl 		
+
+kubeadm init --control-plane-endpoint="lb.dev-k8s-rg.com:6443" --upload-certs --apiserver-advertise-address=10.240.0.39 --pod-network-cidr=10.244.0.0/16
+
+kubeadm init --control-plane-endpoint="10.240.0.12:6443" --upload-certs --apiserver-advertise-address=10.240.0.39 --pod-network-cidr=10.244.0.0/16
+
+
+
+

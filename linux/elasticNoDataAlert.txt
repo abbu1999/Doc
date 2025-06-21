@@ -1,0 +1,59 @@
+#!/bin/bash
+opco="KE"
+date=$(date '+%Y-%m-%d')
+processFile=/data/scripts/index.txt
+curl -k --noproxy '*' -XGET "https://elastic:Elastic1234@172.23.0.51:9200/_cat/indices" | awk '{print $3}' | grep -v '^\.' | awk -F '[-_][0-9]{4}\\.[0-9]{2}\\.[0-9]{2}|[-_][0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$' '{print $1}' | uniq > $processFile
+while IFS= read -r index
+do
+        timestamp=$(date --utc "+%Y-%m-%dT%H:%M:%S")
+        docCount=$(curl -k --noproxy '*' -XGET "https://elastic:Elastic1234@172.23.0.51:9200/$index*/_search" -H 'Content-Type: application/json' -d' {"query":{"bool":{"must":[],"filter":[{"range":{"@timestamp":{"format":"strict_date_optional_time","gte":"now-60m","lte":"now"}}}],"should":[],"must_not":[]}}}'|jq '.hits.total.value')
+        #echo $index $docCount $opco
+        if [ $docCount -eq 0 ];
+        then
+                curl -k --noproxy '*' -XPOST "https://elastic:Elastic1234@172.23.0.51:9200/elastic_no_data-$date/_doc/$opco-$index" -H 'Content-Type: application/json' -d'{"index": "'$index'","docCount": '$docCount',"count": 0,"opco": "'$opco'","@timestamp": "'$timestamp'"}'
+        else
+                curl -k --noproxy '*' -XPOST "https://elastic:Elastic1234@172.23.0.51:9200/elastic_no_data-$date/_doc/$opco-$index" -H 'Content-Type: application/json' -d'{"index": "'$index'","docCount": '$docCount',"count": 1,"opco": "'$opco'","@timestamp": "'$timestamp'"}'
+        fi
+done < $processFile
+
+
+##########
+
+
+#!/bin/bash
+set -o pipefail
+date=$(date '+%Y-%m-%d')
+indexFile=/data/scripts/indexMapping2.csv
+IFS=','
+##
+opco="SC"
+##
+getMappingIp="172.23.0.51:9200"
+getMappingCredential="elastic:Elastic1234"
+getMappingIndex="abbu_no_data_mapping"
+##
+getDocCountIp="172.25.192.225:9200"
+getDocCountCredential="elastic:Elastic1234"
+##
+sendDataIp="172.23.0.51:9200"
+sendDataCredential="elastic:Elastic1234"
+sendDataIndex="elastic_no_data"
+##
+jqOutput=$(curl -ks --noproxy '*' -XGET -u $getMappingCredential "https://$getMappingIp/$getMappingIndex/_search/" -H 'Content-Type: application/json' -d' { "track_total_hits": true, "size": 1500 } ' | jq -r '.hits.hits[]._source | [.indexName,.time,.createdAt,.applicationName] | @csv' | sed 's/"//g' > $indexFile)
+#echo $?
+if [[ $? != 0 ]];
+then
+        echo "Mapping Index Not Found"
+else
+        while IFS=',' read -r indexName time createdAt applicationName; do
+        timestamp=$(date --utc "+%Y-%m-%dT%H:%M:%S")
+        docCount=$(curl -ks --noproxy '*' -XGET -u $getDocCountCredential "https://$getDocCountIp/$indexName/_search" -H 'Content-Type: application/json' -d' {"query":{"bool":{"must":[],"filter":[{"range":{"'$createdAt'":{"format":"strict_date_optional_time","gte":"now-'$time'","lte":"now"}}}],"should":[],"must_not":[]}}}'|jq '.hits.total.value')
+
+        if [[ $docCount == 0 ]];
+        then
+                curl -ks --noproxy '*' -XPOST -u $sendDataCredential "https://$sendDataIp/$sendDataIndex-$date/_doc/$opco-$indexName" -H 'Content-Type: application/json' -d'{"index": "'$indexName'","docCount": '$docCount',"count": 0,"opco": "'$opco'","applicationName": "'$applicationName'","@timestamp": "'$timestamp'"}'
+        else
+                curl -ks --noproxy '*' -XPOST -u $sendDataCredential "https://$sendDataIp/$sendDataIndex-$date/_doc/$opco-$indexName" -H 'Content-Type: application/json' -d'{"index": "'$indexName'","docCount": '$docCount',"count": 1,"opco": "'$opco'","applicationName": "'$applicationName'","@timestamp": "'$timestamp'"}'
+        fi
+        done < $indexFile
+fi

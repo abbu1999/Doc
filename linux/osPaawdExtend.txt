@@ -1,0 +1,23 @@
+set timeout 10
+while read line ; do
+echo "checking password for $line"
+days=05
+never2=never
+expirysetdate="$(date -d "$date -30 days" +%Y-%m-%d)"
+userpassexpire="$(chage -l $line|grep "Password expires"|cut -d : -f 2)"
+if [ "$userpassexpire" = " $never2" ] ; then
+echo $line password seems never expiry continue
+continue;
+fi
+echo $userpassexpire
+userdate=$(date -d "$userpassexpire" +%Y%m%d)
+currentdate="$(date +%Y%m%d)"
+let DIFF=(`date +%s -d $userdate`  -`date +%s -d $currentdate`)/86400
+echo $DIFF
+
+if [ "$DIFF" -gt "$days" ] ; then
+echo "days to extend password is OK"
+else
+chage -d $expirysetdate $line
+fi
+done < /root/PASS-CHECK/userlist.txt

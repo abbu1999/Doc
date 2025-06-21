@@ -1,0 +1,75 @@
+---
+- name: Install Apache
+  hosts: machine
+  tasks:
+
+    - name: Install Apache
+      yum:
+        name:
+          - httpd
+          - httpd-devel
+        state: present
+
+    - name: Copy Configuration File
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - src: httpd.conf
+          dest: /etc/httpd/conf/httpd.conf
+        - src: httpd-vhosts.conf
+          dest: /etc/httpd/conf/httpd-vhosts.conf
+
+    - name: Make Apache Started And Enabled
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+        
+---    
+---
+- name: Check Password Expiry and Send Teams Alert
+  hosts: localhost
+  gather_facts: true
+
+  tasks:
+    - name: Get Password Expiry Days
+      shell: chage -l {{ username }} | grep "Password expires" | cut -d: -f2 | tr -d ' '
+      register: password_expiry_days
+
+    - name: Calculate Remaining Days
+      set_fact:
+        remaining_days: "{{ (password_expiry_days.stdout | int) - (ansible_date_time.epoch | int) / 86400 }}"
+
+    - name: Send Teams Alert if Expiry is Less Than 5 Days
+      when: remaining_days < 5
+      uri:
+        url: "https://graph.microsoft.com/v1.0/teams/{{ teams_channel_id }}/messages"
+        method: POST
+        body_format: json
+        headers:
+          Content-Type: "application/json"
+          Authorization: "Bearer {{ teams_access_token }}"
+        body: |
+          {
+            "body": {
+              "content": "Password for {{ username }} will expire in {{ remaining_days }} days. Please update the password."
+            }
+          }
+      delegate_to: localhost
+
+---
+
+KE    summery 30 days
+  c 317centralized_grafana_auditing-
+
+
+NGPSB selfacre portal 8 days
+
+systemctl list-unit-files | grep -E 'sshd.service' | wc -l
+
+systemctl is-enabled sshd
+systemctl is-active sshd

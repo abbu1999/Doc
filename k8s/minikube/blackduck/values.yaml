@@ -1,0 +1,385 @@
+alertName: ""
+alertNamespace: ""
+authentication:
+  affinity: {}
+  claimSize: 2Gi
+  hubMaxMemory: 512m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  resources:
+    limits:
+      memory: 1024Mi
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+binaryscanner:
+  affinity: {}
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.9.1
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: docker.io/sigsynopsys
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 4096Mi
+    requests:
+      cpu: 500m
+      memory: 4096Mi
+  securityContext: {}
+  tolerations: []
+bomengine:
+  affinity: {}
+  dbPoolMaxActive: null
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  replicas: 1
+  resources: {}
+  securityContext: {}
+  tolerations: []
+cfssl:
+  affinity: {}
+  claimSize: 2Gi
+  imagePullPolicy: IfNotPresent
+  imageTag: 1.0.30
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  resources:
+    limits:
+      memory: 640Mi
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+dataRetentionInDays: 180
+datadog:
+  enabled: false
+  imagePullPolicy: IfNotPresent
+  imageTag: 1.0.16
+  registry: null
+dbPoolMaxActive: 32
+documentation:
+  affinity: {}
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  resources:
+    limits:
+      memory: 512Mi
+  securityContext: {}
+  tolerations: []
+enableAlert: false
+enableApplicationLevelEncryption: false
+enableBinaryScanner: false
+enableIPV6: true
+enableInitContainer: true
+enableIntegration: false
+enableLivenessProbe: true
+enablePersistentStorage: true
+enableSourceCodeUpload: false
+environs:
+  BLACKDUCK_CFSSL_PORT: "8888"
+  BROKER_USE_SSL: "yes"
+  HTTPS_VERIFY_CERTS: "yes"
+  RABBIT_MQ_PORT: "5671"
+  RABBITMQ_DEFAULT_VHOST: protecodesc
+  RUN_SECRETS_DIR: /tmp/secrets
+  SCANNER_CONCURRENCY: "1"
+  STRUCTURED_LOGGING: "false"
+exposedNodePort: ""
+exposedServiceType: NodePort
+exposeui: true
+fullnameOverride: null
+imagePullSecrets: []
+imageTag: 2024.10.0
+integration:
+  affinity: {}
+  dbPoolMaxActive: null
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  maxRamPercentage: 90
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  rateMetering:
+    artifactoryIntegration: {}
+  registry: null
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 5120Mi
+    requests:
+      cpu: 500m
+      memory: 5120Mi
+  securityContext: {}
+  tolerations: []
+isAzure: false
+isKubernetes: true
+jobrunner:
+  affinity: {}
+  dbPoolMaxActive: null
+  hubMaxMemory: 3072m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  maxOndemandPrefetch: 4
+  maxOndemandThreads: 4
+  maxPeriodicPrefetch: 2
+  maxPeriodicThreads: 3
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  replicas: 1
+  resources: {}
+  securityContext: {}
+  tolerations: []
+logstash:
+  affinity: {}
+  claimSize: 20Gi
+  hubMaxMemory: 2048m
+  imagePullPolicy: IfNotPresent
+  imageTag: 1.0.39
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  registry: null
+  resources:
+    limits:
+      memory: 2560Mi
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+matchengine:
+  affinity: {}
+  dbPoolMaxActive: null
+  hubMaxMemory: 4096m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  replicas: 1
+  resources:
+    limits:
+      memory: 4608Mi
+  securityContext: {}
+  tolerations: []
+maxTotalSourceSizeinMB: 4000
+maxWaitForSchemaUpdatesMinutes: 240
+metrics:
+  enabled: false
+nameOverride: null
+postgres:
+  adminPassword: testPassword
+  adminUserName: postgres
+  affinity: {}
+  claimSize: 150Gi
+  confClaimSize: 5Mi
+  confPersistentVolumeClaimName: null
+  confStorageClass: ""
+  confVolumeName: ""
+  externalParameterLimit: 12000
+  host: null
+  imagePullPolicy: IfNotPresent
+  imageTag: 15-1.8
+  internalParameterLimit: 12000
+  isExternal: true
+  nodeSelector: {}
+  pathToPsqlInitScript: external-postgres-init.pgsql
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  port: 5432
+  registry: null
+  resources: {}
+  securityContext: {}
+  ssl: true
+  storageClass: ""
+  tolerations: []
+  userPassword: testPassword
+  userUserName: blackduck_user
+  volumeName: ""
+postgresInit:
+  imagePullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 300m
+      memory: 512Mi
+postgresUpgrader:
+  imagePullPolicy: IfNotPresent
+  imageTag: 15-1.1
+  podSecurityContext: {}
+  registry: null
+  resources: {}
+  securityContext: {}
+postgresWaiter:
+  imagePullPolicy: IfNotPresent
+  imageTag: 1.0.14
+  registry: null
+  resources: {}
+  securityContext: {}
+rabbitmq:
+  affinity: {}
+  claimSize: 2Gi
+  imagePullPolicy: IfNotPresent
+  imageTag: 1.2.41
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  resources:
+    limits:
+      memory: 1024Mi
+  securityContext: {}
+  tolerations: []
+redis:
+  affinity: {}
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  maxIdle: 128
+  maxTotal: 128
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  replicas: 1
+  resources:
+    limits:
+      memory: 2048Mi
+  securityContext: {}
+  tlsEnabled: false
+  tolerations: []
+registration:
+  affinity: {}
+  claimSize: 2Gi
+  dbPoolMaxActive: null
+  hubMaxMemory: 640m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  resources:
+    limits:
+      memory: 1024Mi
+    requests:
+      cpu: 1000m
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+registry: docker.io/blackducksoftware
+rlservice:
+  affinity: {}
+  claimSize: 2Gi
+  dbPoolMaxActive: null
+  enabled: false
+  hubMaxMemory: 5530m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  replicas: 1
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 6144Mi
+    requests:
+      cpu: 2000m
+      memory: 6144Mi
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+runPostgresMigration: false
+scan:
+  affinity: {}
+  dbPoolMaxActive: null
+  hubMaxMemory: 2048m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  replicas: 1
+  resources: {}
+  securityContext: {}
+  tolerations: []
+status: Running
+storage:
+  affinity: {}
+  claimSize: 100Gi
+  hubMaxMemory: 1024m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podAnnotations: {}
+  podSecurityContext: {}
+  providers: []
+  registry: null
+  replicas: 1
+  resources: {}
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+storageClass: null
+webapp:
+  affinity: {}
+  claimSize: 2Gi
+  dbPoolMaxActive: null
+  hubMaxMemory: 2048m
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  persistentVolumeClaimName: null
+  podSecurityContext: {}
+  registry: null
+  resources: {}
+  securityContext: {}
+  storageClass: null
+  tolerations: []
+  volumeName: null
+webserver:
+  affinity: {}
+  imagePullPolicy: IfNotPresent
+  imageTag: 2024.10.0
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  registry: null
+  resources: {}
+  securityContext: {}
+  tolerations: []

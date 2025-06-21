@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dep
+  labels:
+    app: nginx-dep-lab
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-pod-lab
+  template:
+    metadata:
+      labels:
+        app: nginx-pod-lab
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
