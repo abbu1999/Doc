@@ -1,0 +1,80 @@
+key feature: agentless
+
+ansible-doc moduleName
+
+
+[app]
+172.168.1.168
+172.168.1.169
+
+[db]
+172.168.1.170
+
+[multi:children] ; : define group has groups 
+app
+db
+
+[multi:vars]
+ansible_ssh_user=ansible
+ansible_ssh_private_key_file=/home/ansible/.ssh/id_rsa
+
+ansible flag link ; https://docs.ansible.com/ansible/2.7/cli/ansible.html
+
+## explore git,cron module, get_url,unarchive,notification module ansible,lineinfile,blockinfile
+
+############################################# AD-HOC #########################################
+
+$$$ if you want learn more option of module google it via module name
+
+ansible -i (inventory flag) /path/to/custom/inventory/dir example (group name (inventory file)) -m (module) ping -u (user(node cmd user)) abbu
+
+ansible example -a "free -h" ; bydefault ansible take module "command" and -a is argumaent of that command module
+
+ansible example -a "free -h" -u abbu -K/--ask-pass ; ask password of node user
+
+ansible multi -a "hostname"
+
+ansible multi -a "hostname" --limit "serverIP" ; rums only provided server Ip
+
+ansible multi -a "hostname" -f 1 ; -f mean fork (fork define how many remote server you want run command simultaneously / or you can define it in ansible.cfg file / you can define it 1 to 100)
+
+ansible -i /etc/ansible/ testing -a "cat /etc/passwd | grep abbu" ;operations like "<", ">", "|", and "&" will not work
+
+ansible -i /etc/ansible/ testing -m shell -a "sudo cat /etc/passwd | grep abbu" ; only shell module support special char
+
+ansible example -b -m yum -a "name=nginx state=present" ; -b/-become (become root user) -b is compulsory in yum module
+
+ansiblle example -m service -a "name=nginx state=started enabled=yes" -b ;  compulsory in service module
+
+ansible example -b -B 3600 -P 60 -a " yum -y update" ; -B Background task  time duration after that job is killed -P poll interval of checking that job and time duration for after how log  ( this command will run for 1 hr duration via using -B 3600s and poll interval will check that job status every 60s gap via using -P 60)
+
+[ansible@ansible-server ~]$ ansible testing -b -B 3600 -P 0 -a "yum -y update"
+192.168.1.105 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "ansible_job_id": "731700908451.3558",
+    "changed": true,
+    "finished": 0,
+    "results_file": "/root/.ansible_async/731700908451.3558",
+    "started": 1
+}
+
+[root@localhost .ansible_async]# ps -ef | grep yum
+root      3565  3563 17 20:41 ?        00:00:58 /usr/bin/python /bin/yum -y update
+
+ansible testing -b -m async_status -a "jid=731700908451.3558" ; async_status (check status of background task)
+
+192.168.1.105 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "ansible_job_id": "731700908451.3558",
+    "changed": false,
+    "finished": 0,
+    "started": 1
+}
+
+ansible testing -a "tail /var/log/messages" -b 
+
+ 

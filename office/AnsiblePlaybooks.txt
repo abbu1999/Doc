@@ -1,0 +1,110 @@
+ansible-playbook playbookName.yml --syntax-check
+ansible-playbook -i /home/ansible/ InstallNginxV2Playbook.yml
+ansible-inventory --list -i inventory
+
+[ansible@ansible-server ~]$ cat InstallNginxPlaybook.yml
+---
+- name: installNginx
+  hosts: testing
+  become: true
+
+  tasks:
+    - name: installNginx
+      command: yum install nginx -y
+    - name: startNginxService
+      command: >
+       systemctl start nginx
+    - name: restartAndDisabled
+      shell: |
+       systemctl restart nginx
+       systemctl disable nginx
+[ansible@ansible-server ~]$
+
+[ansible@ansible-server ~]$ cat InstallNginxV2Playbook.yml
+---
+- name: Installnginx
+  hosts: testing
+  become: true
+  tasks:
+    - name: installNginx
+      yum:
+        name:
+          - nginx
+          - tomcat
+        state: latest
+    - name: serverStart
+      service:
+        name: nginx
+        state: started
+        enabled: true
+[ansible@ansible-server ~]$	  
+
+[ansible@ansible-server ~]$ cat InstallHttpdPlaybook.yml
+---
+- name: InstallApache
+  hosts: testing
+  become: true
+
+  tasks:
+
+    - name: InstallHttpd
+      yum:
+        name:
+          - httpd
+          - httpd-devel
+        state: present
+
+    - name: CopyConfFile
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 644
+      with_items:
+        - src: httpd.conf
+          dest: /etc/httpd/conf/httpd.conf
+        - src: httpd-vhosts.conf
+          dest: /etc/httpd/conf/httpd-vhosts.conf
+
+    - name: StartHttpdService
+      service:
+        name: httpd
+        state: started
+        enabled: true
+[ansible@ansible-server ~]$
+
+[ansible@ansible-server Playbook]$ cat InstallHttpdPlaybook.yml
+---
+- name: InstallApache
+  hosts: testing
+  become: true
+
+  tasks:
+
+    - name: InstallHttpd
+      yum:
+        name:
+          - httpd
+          - httpd-devel
+        state: present
+
+    - name: CopyConfFile
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 644
+      loop:
+        - src: /home/ansible/ResourceFiles/httpd.conf
+          dest: /etc/httpd/conf/httpd.conf
+        - src: /home/ansible/ResourceFiles/httpd-vhosts.conf
+          dest: /etc/httpd/conf/httpd-vhosts.conf
+
+    - name: StartHttpdService
+      service:
+        name: httpd
+        state: started
+        enabled: true
+[ansible@ansible-server Playbook]$

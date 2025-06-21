@@ -1,0 +1,1064 @@
+influx
+use sys
+precision rfc3339
+show retention policies on sys
+select * from cpu order by time asc limit 2
+select * from cpu order by time desc limit 2
+alter retention policy autogen on sys duration 2w shard duration 1h replication 1 default
+show retention policies on sys
+select * from cpu order by time asc limit 2
+select * from cpu order by time desc limit 2
+exit
+init 6
+influx
+show retention policies on sys
+############################################################
+Retention Policy Duration    Shard Group Duration
+< 2 days                          1 hour
+>= 2 days and <= 6 months         1 day
+> 6 months						  7 day
+############################################################
+Retention Duration is always > Retention Shard Group Duration
+############################################################
+8-june-22 10.241.99.40 lapuUpgrade lapuerricsn first data 2w retention
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+User space programs cannot access system resources directly so access is handled on the program's behalf by the operating system kernel. The user space programs typically make such requests of the operating system through system calls.
+
+containerzation works on user space.
+
+Kernel runs in Kernel Space, the kernel space has full access to all memory and resources, you can say the memory divide into two parts, part for kernel , and part for user own process, (user space) runs normal programs, user space cannot access directly to kernel space so it request from kernel to use resources.
+ 
+virtualization is work on kernal space.
+ 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+cat /etc/systemd/system/test.service
+cat /etc/init.d/
+cat /usr/lib/systemd/system/
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# ======================== Elasticsearch Configuration =========================
+#
+# NOTE: Elasticsearch comes with reasonable defaults for most settings.
+#       Before you set out to tweak and tune the configuration, make sure you
+#       understand what are you trying to accomplish and the consequences.
+#
+# The primary way of configuring a node is via this file. This template lists
+# the most important settings you may want to configure for a production cluster.
+#
+# Please consult the documentation for further information on configuration options:
+# https://www.elastic.co/guide/en/elasticsearch/reference/index.html
+#
+# ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+cluster.name: my-application
+#
+# ------------------------------------ Node ------------------------------------
+#
+# Use a descriptive name for the node:
+#
+node.name: node-1
+node.roles: [ master, data ]
+#
+# Add custom attributes to the node:
+#
+#node.attr.rack: r1
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+path.data: /var/lib/elasticsearch
+#
+# Path to log files:
+#
+path.logs: /var/log/elasticsearch
+#
+# ----------------------------------- Memory -----------------------------------
+#
+# Lock the memory on startup:
+#
+#bootstrap.memory_lock: true
+#
+# Make sure that the heap size is set to about half the memory available
+# on the system and that the owner of the process is allowed to use this
+# limit.
+#
+# Elasticsearch performs poorly when the system is swapping the memory.
+#
+# ---------------------------------- Network -----------------------------------
+#
+# By default Elasticsearch is only accessible on localhost. Set a different
+# address here to expose this node on the network:
+#
+network.host: 192.168.1.106
+#
+# By default Elasticsearch listens for HTTP traffic on the first free port it
+# finds starting at 9200. Set a specific HTTP port here:
+#
+http.port: 9200
+#
+# For more information, consult the network module documentation.
+#
+# --------------------------------- Discovery ----------------------------------
+#
+# Pass an initial list of hosts to perform discovery when this node is started:
+# The default list of hosts is ["127.0.0.1", "[::1]"]
+#
+discovery.seed_hosts: ["192.168.1.106", "192.168.1.105"]
+#
+# Bootstrap the cluster using an initial set of master-eligible nodes:
+#
+cluster.initial_master_nodes: ["node-1", "node-2"]
+#
+# For more information, consult the discovery and cluster formation module documentation.
+#
+# --------------------------------- Readiness ----------------------------------
+#
+# Enable an unauthenticated TCP readiness endpoint on localhost
+#
+#readiness.port: 9399
+#
+# ---------------------------------- Various -----------------------------------
+#
+# Allow wildcard deletion of indices:
+#
+#action.destructive_requires_name: false
+
+#----------------------- BEGIN SECURITY AUTO CONFIGURATION -----------------------
+#
+# The following settings, TLS certificates, and keys have been automatically
+# generated to configure Elasticsearch security features on 30-07-2022 03:36:55
+#
+# --------------------------------------------------------------------------------
+
+# Enable security features
+xpack.security.enabled: false
+
+xpack.security.enrollment.enabled: true
+
+# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
+xpack.security.http.ssl:
+  enabled: false
+  keystore.path: certs/http.p12
+
+# Enable encryption and mutual authentication between cluster nodes
+xpack.security.transport.ssl:
+  enabled: false
+  verification_mode: certificate
+  keystore.path: certs/transport.p12
+  truststore.path: certs/transport.p12
+# Create a new cluster with the current node only
+# Additional nodes can still join the cluster later
+#cluster.initial_master_nodes: ["node-2"]
+
+# Allow HTTP API connections from anywhere
+# Connections are encrypted and require user authentication
+http.host: 0.0.0.0
+
+# Allow other nodes to join the cluster from anywhere
+# Connections are encrypted and mutually authenticated
+#transport.host: 0.0.0.0
+
+#----------------------- END SECURITY AUTO CONFIGURATION -------------------------
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/etc/sysconfig/network-scripts/ifcfg-eth0
+
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=eth0
+UUID=07c36ab1-9ea6-478c-9483-def939f95b1a
+DEVICE=eth0
+ONBOOT=yes
+IPADDR=192.168.128.240
+NETMASK=255.255.255.0
+GATEWAY=192.168.128.1
+DNS1=8.8.8.8
+DNS2=8.8.4.4
+
+---------------------------------
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=enp0s3
+UUID=07c36ab1-9ea6-478c-9483-def939f95b1a
+DEVICE=enp0s3
+ONBOOT=no
+
+[root@localhost ~]#
+cat /etc/sysconfig/network-scripts/ifcfg-enp0s3
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=enp0s3
+UUID=979db2c5-6916-4f2f-a751-6ba46c5b097f
+DEVICE=enp0s3
+ONBOOT=yes
+IPADDR=192.168.0.101
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.1
+DNS1=8.8.8.8
+DNS2=8.8.4.4
+###############################
+stop firewalld
+sysctl net.bridge.bridge-nf-call-iptables=1
+
+sysctl -w bridge-nf-call-iptables=1
+
+kubeadm init --apiserver-advertise-address=0.0.0.0 --cri-socket=/run/containerd/containerd.sock --pod-network-cidr=10.244.0.0/16
+
+###################
+https://github.com/dubareddy/kubernetes_latest_manifest/blob/0ad742da6e5537e5352092db3b60e18c20a17a34/Kubernetes/01-kubernetes-architecture-Installation/03-k8s-setup-kubeadm-containerd.md
+###################
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kubelet kubeadm kubectl
+EOF
+
+# Set SELinux in permissive mode (effectively disabling it)
+sudo setenforce 0
+sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+
+sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
+sudo systemctl enable --now kubelet
+
+#################
+mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+###################
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.1.106:6443 --token dcznqn.cdfwq97dsb5cahaq \
+        --discovery-token-ca-cert-hash sha256:d6c2a93ecc578694cd237b6a5de7285d5b31ee00050d050b40650dee9642c4f5
+		
+		
+		
+		
+***************************************
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.1.108:6443 --token a6m6gl.8yto093cdr4mhp67 \
+        --discovery-token-ca-cert-hash sha256:765b170d62d99f28f55f5b6e35dc4b905f12f98602ff1cc8686641bd5679a2c5
+		
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+https://www.apache.org/dyn/closer.cgi?path=/kafka/2.8.0/kafka_2.13-2.8.0.tgz
+
+vim /etc/rc.d/rc.local
+
+/home/abbu/kafka_2.13-2.8.0/bin/zookeeper-server-start.sh /home/abbu/kafka_2.13-2.8.0/config/zookeeper.properties > /dev/null 2>&1 &
+chmod +x /etc/rc.d/rc.local
+systemctl enable rc-local
+systemctl start rc-local
+
+https://stackoverflow.com/questions/49370959/getting-org-apache-kafka-common-network-invalidreceiveexception-invalid-receiv
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#### multiple instances for LG
+https://discuss.elastic.co/t/solved-multiple-instances-for-logstash/65539/2?u=theuntergeekac
+/usr/share/logstash/bin/system-install  /etc/logstash2/startup.option
+####
+https://www.elastic.co/guide/en/beats/heartbeat/current/monitor-http-options.html
+###
+
+###list all plugins
+Q
+bin/logstash-plugin list
+
+###if you want make a offine plugin first you need to intall that for that you need internet.
+
+ bin/logstash-plugin install logstash-output-influxdb
+
+### for make offline plugin
+
+bin/logstash-plugin prepare-offline-pack logstash-output-influxdb
+logstash-filter-elasticsearch
+
+### plugin version
+/logstash-plugin list --verbose logstash-input-imap
+
+
+gem install logstash-filter-elasticsearch
+
+gem install logstash-filter-elasticsearch
+
+### for install
+
+bin/logstash-plugin install file:////usr/share/logstash/logstash-offline-plugins-7.14.0.zip
+
+### for update 
+
+bin/logstash-plugin update plugin name
+
+/opt/logstash/vendor/bundle/jruby/2.5.0/gems/logstash-input-imap-3.0.7/lib/logstash/inputs]
+https://rubygems.org/gems/manticore/versions/0.7.0-java
+
+
+/usr/share/logstash/vendor/bundle/jruby/2.5.0/gems
+/usr/share/logstash/bin/logstash -f filename
+************************************************************************************************************************
+https://stackoverflow.com/questions/53680374/how-to-install-docker-ce-without-internet-and-intranet-yum-repository
+https://docs.docker.com/engine/install/binaries/
+https://download.docker.com/linux/static/stable/x86_64/
+************************************************************************************************************************
+
+systemctl stop logstash
+
+rpm -e logstash-7.1.1-1.noarch
+
+rm -rf /etc/logstash
+
+cd /data
+
+mkdir -p logstash/var/lib/logstash
+
+mkdir -p logstash/var/log/logstash
+
+chown logstash:logstash -R /data/logstash/var/lib/logstash
+
+chown logstash:logstash -R /data/logstash/var/log/logstash
+
+cd /home/aiops
+ 
+rpm -i logstash-7.1.1.rpm
+
+cd /usr/share/logstash
+
+bin/logstash-plugin install file:////home/aiops/logstash-offline-plugins-7.1.1.zip
+
+bin/logstash-plugin install file:///home/aiops/logstash-offline-plugins-7.4.0.zip
+
+chown logstash:logstash -R /etc/logstash
+
+chown logstash:logstash -R /usr/share/logstash
+
+
+
+vim /etc/logstash/logstash.yml
+
+/data/logstash/var/lib/logstash
+
+/data/logstash/var/log/logstash
+
+vim /etc/logstash/jvm.option
+
+20g
+20g
+
+systemctl start logstash
+
+
+
+logstash-codec-avro
+logstash-codec-cef
+logstash-codec-collectd
+logstash-codec-dots
+logstash-codec-edn
+logstash-codec-edn_lines
+logstash-codec-es_bulk
+logstash-codec-fluent
+logstash-codec-graphite
+logstash-codec-json
+logstash-codec-json_lines
+logstash-codec-line
+logstash-codec-msgpack
+logstash-codec-multiline
+logstash-codec-netflow
+logstash-codec-plain
+logstash-codec-rubydebug
+logstash-filter-aggregate
+logstash-filter-anonymize
+logstash-filter-cidr
+logstash-filter-clone
+logstash-filter-csv
+logstash-filter-date
+logstash-filter-de_dot
+logstash-filter-dissect
+logstash-filter-dns
+logstash-filter-drop
+logstash-filter-elasticsearch
+logstash-filter-fingerprint
+logstash-filter-geoip
+logstash-filter-grok
+logstash-filter-http
+logstash-filter-jdbc_static
+logstash-filter-jdbc_streaming
+logstash-filter-json
+logstash-filter-kv
+logstash-filter-memcached
+logstash-filter-metrics
+logstash-filter-mutate
+logstash-filter-prune
+logstash-filter-ruby
+logstash-filter-sleep
+logstash-filter-split
+logstash-filter-syslog_pri
+logstash-filter-throttle
+logstash-filter-translate
+logstash-filter-truncate
+logstash-filter-urldecode
+logstash-filter-useragent
+logstash-filter-uuid
+logstash-filter-xml
+logstash-input-azure_event_hubs
+logstash-input-beats
+logstash-input-couchdb_changes
+logstash-input-dead_letter_queue
+logstash-input-elasticsearch
+logstash-input-exec
+logstash-input-file
+logstash-input-ganglia
+logstash-input-gelf
+logstash-input-generator
+logstash-input-graphite
+logstash-input-heartbeat
+logstash-input-http
+logstash-input-http_poller
+logstash-input-imap
+logstash-input-jdbc
+logstash-input-kafka
+logstash-input-pipe
+logstash-input-rabbitmq
+logstash-input-redis
+logstash-input-s3
+logstash-input-snmp
+logstash-input-snmptrap
+logstash-input-sqs
+logstash-input-stdin
+logstash-input-syslog
+logstash-input-tcp
+logstash-input-twitter
+logstash-input-udp
+logstash-input-unix
+logstash-output-cloudwatch
+logstash-output-csv
+logstash-output-elastic_app_search
+logstash-output-elasticsearch
+logstash-output-email
+logstash-output-file
+logstash-output-graphite
+logstash-output-http
+logstash-output-influxdb
+logstash-output-kafka
+logstash-output-lumberjack
+logstash-output-nagios
+logstash-output-null
+logstash-output-pipe
+logstash-output-rabbitmq
+logstash-output-redis
+logstash-output-s3
+logstash-output-sns
+logstash-output-sqs
+logstash-output-stdout
+logstash-output-tcp
+logstash-output-udp
+logstash-output-webhdfs
+logstash-patterns-core
+
+SELECT comment_msg, count(ref_id) FROM public.tblm6comments m6 where TO_TIMESTAMP(m6.creationtime,'YYYY-MM-DD HH24:MI:SS') >= (NOW() - INTERVAL '2 HOURS') and (m6.comment_msg like '%PING Timeout%' or m6.comment_msg like '%SNMP Timeout%') group by comment_msg
+
+Shailu@488
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+elasticsearch
+                {
+                hosts => ["172.23.87.116:9200"]
+                index=>"vrops_resource_ke-*"
+                user => elastic
+                password => Aiops123
+				# same value hold by both index for matching both table data
+                query => 'identifier:"%{[resourceId]}"'
+               
+     fields => {
+                               # dicsnatonery table field value assigned to new field of new elastic index
+							   "[resourceKey][resourceKindKey]" => "resourceKindKey"
+                                "[resourceKey][name]" => "resourcename"
+                                "[resourceKey][adapterKindKey]" => "adapterKindKey"
+								
+                           }
+                                     
+                                     sort => "@timestamp:desc"
+            
+                }
+				
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+https://linuxize.com/post/how-to-install-node-js-on-centos-7/
+
+/usr/lib/node_modules
+
+cd /root
+vi bashrc
+
+alias pm2='/usr/lib/node_modules/pm2/bin/pm2'
+source .bashsrc
+
+
+vim ecosystem.config.js
+
+module.exports = {
+  apps : [{
+        name        : "watchman_3.0",
+        script      : "/home/arcos_root/watchman_3.0/index_2.0.js",
+  time     : true,
+        out_file    : "/dev/null"
+  },
+    {
+        name        : "FiberForce",
+        script      : "/home/arcos_root/FiberForce/FiberForce_port.js",
+        time        : true,
+        out_file    : "/dev/null"
+  }
+
+]}
+
+
+pm2 start path/ecosystem.config.json
+
+/usr/bin/node
+
+ln -s /usr/local/node/lib/node_modules/pm2/bin/pm2  /usr/bin/node/pm2
+ln -s /usr/local/node/lib/node_modules/pm2/bin/pm2-dev  /usr/bin/node/pm2-dev
+ln -s /usr/local/node/lib/node_modules/pm2/bin/pm2-docker  /usr/bin/node/pm2-docker
+ln -s /usr/local/node/lib/node_modules/pm2/bin/pm2-runtime  /usr/bin/node/pm2-runtime
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+https://www.turbogeek.co.uk/grafana-how-to-configure-ssl-https-in-grafana/
+
+port => 443
+
+https://stackoverflow.com/questions/28303978/changing-grafana-port
+
+/usr/share/grafana/conf/defaults.ini
+/usr/share/grafana/conf/sample.ini
+
+
+
+https://grafana.com/docs/grafana/latest/administration/configuration/#http_port
+
+
+https://stackoverflow.com/questions/413807/is-there-a-way-for-non-root-processes-to-bind-to-privileged-ports-on-linux
+
+
+https://www.techspot.com/news/68482-quickly-convert-between-storage-size-units-kb-mb.html
+
+
+Step 1 => For apply ssl in grafana
+
+openssl genrsa -out grafana.key 2048
+openssl req -new -key grafana.key -out grafana.csr
+openssl x509 -req -days 365 -in grafana.csr -signkey grafana.key -out grafana.crt
+
+vim /etc/grafana/grafana.ini
+
+protocol = https
+cert_key = /etc/grafana/grafana.key
+cert_file = /etc/grafana/grafana.crt
+
+service grafana-server restart
+
+https://www.turbogeek.co.uk/grafana-how-to-configure-ssl-https-in-grafana/
+
+Step 2 => For port changeing
+
+vim /etc/grafana/grafana.ini
+http_port = 443
+
+/usr/share/grafana/conf/defaults.ini
+http_port = 443
+
+setcap 'cap_net_bind_service=+ep' /usr/sbin/grafana-server
+service grafana-server restart
+
+https://grafana.com/docs/grafana/latest/administration/configuration/#http_port
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+selfmonitoringafrica-*
+heartvialogstash-*
+nagios_newdata-*
+selfmonitoringtotal_time-*
+nagios_host_ping-*
+
+
+#!/bin/bash
+ChatID="-315217667"
+Token="bot772668884:AAHSlfUMykPXQbBXXa2TC9cnlqPN7otxEJY"
+OPCO=$(hostname)
+IP=$(hostname -i)
+value=$(</data/script/elastic_no_data_index.txt)
+#echo "$value"
+for i in $value
+do
+#echo $i
+Hits=$(curl -XGET "http://elastic:Aiops123@172.23.87.116:9200/$i/_search" -H 'Content-Type: application/json' -d'{  "query": {    "bool": {      "must": [],      "filter": [        {          "range": {            "@timestamp": {              "gte": "now-5m",              "lte": "now",              "format": "strict_date_optional_time"            }          }        }      ],      "should": [],      "must_not": []    }  }  }' | jq .hits.total.value)
+echo $Hits
+if ((Hits < 1))
+then
+Msg="🚫Elastic-No-Data-Alert in last 15 Mins🚫 "%0A" Index: $i "%0A" Hits: $Hits "%0A" Opco: $OPCO "%0A" IP: $IP"
+curl -k -X POST "https://api.telegram.org/$Token/sendMessage" -d chat_id=$ChatID -d text="$Msg";
+        fi
+done
+
+
+https://stackoverflow.com/questions/50018785/telegram-rest-api-send-newline-in-message-text
+
+curl -k -X  POST "https://api.telegram.org/bot
+872159362:AAGdrD-OpcX3b1BRa6iKD2NxEIaKAXbQi68
+/sendMessage" -d chat_id=-1001389812954 -d text="testing..Please ignore"
+
+
+
+
+
+
+'10.14.162.50' '10.14.162.51' '10.14.162.52' '10.14.162.67' '10.222.166.56' '10.222.175.105' '10.222.175.106' '10.241.148.183' '10.241.150.165' '10.241.150.166' '10.241.150.167' '10.241.150.168' '10.5.245.23' '10.5.28.148' '10.5.30.157' '10.5.30.158' 
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+GET _cluster/settings
+
+PUT _cluster/settings?flat_settings=true&pretty
+{
+    "persistent": { "search.max_buckets": 75000 }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- type: http
+  urls: ["https://digi-api.airtel.in/mobility-acquisition/health-check"]
+  name: Health_Check
+  schedule: '@every 60s'
+  ssl:
+    verification_mode: none
+    supported_protocols: ["TLSv1.0", "TLSv1.1", "TLSv1.2"]
+  fields:
+    application: mobility-acquisition		
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+input {
+#  tcp {
+#    host => "172.23.87.116"
+#    port => 5144
+#    #syslog_field => "syslog"
+#  }
+#  udp {
+#    host => "172.23.87.116"
+#    port => 5144
+#    #syslog_field => "syslog"
+#  }
+#file{
+#       path =>"/data/tmp/haproxy/haproxy.log-20211007"
+#        sincedb_path=>"/data/tmp/haproxy/haproxy.db"
+#        start_position=> "beginning"
+#
+#}
+file{
+        path =>"/data/tmp/haproxy/haproxy.log-20211*"
+        sincedb_path=>"/dev/null"
+        start_position=> "beginning"
+
+}
+
+}
+filter
+{
+if [message]=~/SSL handshake failure/
+                {
+grok
+                {
+                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}:\s%{DATA}(?<failure_msg>[A-Za-z ,0-9]{0,100})']
+                }
+
+                }
+
+else if [message]=~/POST/ or [message]=~/GET/ or [message]=~/HEAD/ or [message]=~/PUT/ or [message]=~/CONNECT/
+               {
+grok
+                {
+
+match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name} %{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}/%{INT:time_backend_response}/%{NOTSPACE:time_duration} %{INT:http_status_code} %{NOTSPACE:bytes_read} %{DATA:captured_request_cookie} %{DATA:captured_response_cookie} %{NOTSPACE:termination_state} %{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}\s"%{WORD:http_method}\s%{NOTSPACE:request}\s\HTTP/%{NUMBER:http_version}"']
+
+                }
+
+
+                }
+
+else
+                {
+grok
+                {
+                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name}\s%{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}\s%{NOTSPACE:bytes_read}\s%{DATA:captured_request_cookie}\s%{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}']
+
+                }
+                }
+if "_grokparsefailure" in [tags]{
+
+                grok {
+                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name}\s%{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}/%{NOTSPACE:bytes_read}\s%{DATA:captured_request_cookie}\s%{NOTSPACE}%{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}\s%{GREEDYDATA:requested_url}']
+tag_on_failure => ["not_format_grok1"]
+}
+}
+if "not_format_grok1" in [tags] {
+       grok {
+                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\sServer\s%{NOTSPACE:backend_name}/%{NOTSPACE:client_ip}(-%{DATA:client_port})?\sis\s%{WORD:status},\s%{DATA}\s%{NUMBER:time_backend_connect}%{DATA},\s%{NUMBER:backend_queue}(%{DATA})?']
+                                tag_on_failure => ["not_format_grok2"]
+                        }
+
+    }
+        if "not_format_grok2" in [tags] {
+       grok {
+                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{DATA}\s%{NOTSPACE:backend_name}\s%{DATA:failure_msg}(%{DATA})?']
+                            tag_on_failure => ["not_format_grok3"]
+                        }
+    }
+        if "not_format_grok3" in [tags] {
+       grok {
+                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name} %{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}/%{INT:time_backend_response}/%{NOTSPACE:time_duration} %{INT:http_status_code} %{NOTSPACE:bytes_read} %{DATA:captured_request_cookie} %{DATA:captured_response_cookie} %{NOTSPACE:termination_state} %{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}\s"%{WORD:http_method}\s%{NOTSPACE:request}\s(%{DATA})?']
+                                tag_on_failure => ["not_format_grok4"]
+                        }
+    }
+#if "_grokparsefailure" in [tags]{
+#               grok {
+#               match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name} %{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}/%{INT:time_backend_response}/%{NOTSPACE:time_duration} %{INT:http_status_code} %{NOTSPACE:bytes_read} %{DATA:captured_request_cookie} %{DATA:captured_response_cookie} %{NOTSPACE:termination_state} %{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}\s\\"%{WORD:http_method}\s%{NOTSPACE:request}\s\HTTP/%{NUMBER:http_version}\\"']
+#}
+#}
+#if "_grokparsefailure" in [tags]{
+#                grok {
+#                match => ["message",'%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name}\s%{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}\s%{NOTSPACE:bytes_read}\s%{DATA:captured_request_cookie}\s%{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}']
+#}
+#}
+#if "_grokparsefailure" in [tags]{
+#                grok {
+#                match => ["message",'%{DATA:Date}haproxy%{NOTSPACE:HAPROXY_THREAD}:\s%{IP:client_ip}:%{INT:client_port} \[%{HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name}\s%{NOTSPACE:backend_name} %{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}/%{INT:time_backend_response}/%{NOTSPACE:time_duration} %{INT:http_status_code} %{NOTSPACE:bytes_read} %{DATA:captured_request_cookie} %{DATA:captured_response_cookie} %{NOTSPACE:termination_state} %{INT:actcon}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue}\s\\"%{WORD:http_method}\s%{NOTSPACE:request}\s\HTTP/%{NUMBER:http_version}\\"']
+#}
+#}
+
+        mutate
+                {
+                copy => {"backend_name" => "backnd_app_updated"}
+                }
+mutate
+        {
+        gsub=>
+                [
+                "backnd_app_updated", "\/([0-9,?,a-z,A-Z,<]{1,10}.*)",""
+                ]
+        }
+mutate{
+        gsub =>["Date"," ","-"]
+}
+#date {
+#    match => ["Date", "MMMddHH:mm:ss"]
+#    target => "@timestamp"
+#  }
+date {
+        match => [ "Date" ,"MMM-dd-HH:mm:ss"]
+        tag_on_failure => [ "not_format_date1"]
+        target => "@timestamp"
+    }
+    if "not_format_date1" in [tags] {
+        date {
+            match => [ "Date" ,"MMM--dd-HH:mm:ss"]
+            tag_on_failure => [ "not_format_date2"]
+            target => "@timestamp"
+        }
+    }
+
+#date {
+#    match => ["accept_date", "dd/MM/yyy:HH:mm:ss'.'SSS"]
+#    target => "@timestamp"
+#  }
+mutate
+                {
+                         convert => {"time_duration" => "integer"}
+                         convert => {"backend_queue" => "integer"}
+                         convert => {"beconn" => "integer"}
+                         convert => {"bytes_read" => "integer"}
+                         convert => {"feconn" => "integer"}
+                         convert => {"haproxy_hour" => "integer"}
+                         convert => {"haproxy_milliseconds" => "integer"}
+                         convert => {"haproxy_minute" => "integer"}
+                         convert => {"retries" => "integer"}
+                         convert => {"srv_queue" => "integer"}
+                         convert => {"srvconn" => "integer"}
+                         convert => {"time_backend_connect" => "integer"}
+                         convert => {"time_backend_response" => "integer"}
+                         convert => {"time_queue" => "integer"}
+                         convert => {"time_request" => "integer"}
+                         add_field => {"OPCO"=>"KENYA"}
+                        convert => {"actcon" => "integer"}
+
+                }
+       }
+output
+{
+#file
+#{
+# path => "/data/logstash/rsyslog-%{+YYYY-MM-dd-HH}.txt"
+#}
+ elasticsearch
+                {
+                hosts => ["172.23.87.116:9200","172.23.87.114:9200","172.23.87.115:9200"]
+                user => elastic
+                password => Aiops123
+                index => "hrproxybfenew"
+                }
+
+#stdout { codec => rubydebug }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+======================================================================================================
+153.78.107.192 - - [21/Nov/2017:08:45:45 +0000] "POST /ngx_pagespeed_beacon?url=https%3A%2F%2Fwww.example.com%2Fads%2Ffresh-oranges-1509260795 HTTP/2.0" 204 0 "https://www.suasell.com/ads/fresh-oranges-1509260795" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0" "-" a02b2dea9cf06344a25611c1d7ad72db Uganda UG Kampala Kampala 
+
+%{IP:host_ip} - - \[%{DATA:d}\] %{DATA}=%{DATA:u} HTTP
+%{IP:host_ip} - - \[%{DATA:d}\] .%=%{DATA:u} HTTP
+=====================================================================================================
+Oct  6 14:05:58 localhost haproxy[10036]: Server openapi_172.23.13.124_443/172.27.100.115 is DOWN, reason: Layer4 timeout, check duration: 2001ms. 0 active and 0 backup servers left. 9 sessions active, 0 requeued, 0 remaining in queue.
+
+%{DATA:Date}\slocalhost\shaproxy%{NOTSPACE:HAPROXY_THREAD}:\sServer\s%{NOTSPACE:backend_name}/%{NOTSPACE:client_ip}(-%{DATA:client_port})?\sis\s%{WORD:status},\s%{DATA}\s%{NUMBER:time_backend_connect}%{DATA},\s%{NUMBER:backend_queue}(%{DATA})?
+======================================================================================================
+
+
+%{DATA}\|%{NOTSPACE}\s+%{NUMBER:responseCode}\s+%{DATA}\|\s+%{NUMBER:response_time}%{NOTSPACE:timeUnit}\s+\|\s+%{IP:clientIP}\s+\|%{NOTSPACE}\s+%{WORD:method}\s+%{NOTSPACE}\s+%{URIPATHPARAM:url}
+=======================================================================================================
+
+
+
+%{DATA}\|%{NOTSPACE}\s+%{NUMBER:responseCode}\s+%{DATA}\|\s+%{NUMBER:response_time}ms\s+\|\s+%{IP:clientIP}\s+\|%{NOTSPACE}\s+%{WORD:method}\s+%{NOTSPACE}\s+%{URIPATHPARAM:url}
+
+
+{"log":"[GIN] 2021/11/17 - 16:08:44 |\u001b[97;42m 200 \u001b[0m|     398.049µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:38:44.050684225Z"}
+
+
+{"log":"[GIN] 2021/11/17 - 16:10:43 |\u001b[97;42m 200 \u001b[0m|     304.233µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:40:43.056773629Z"}
+
+
+
+Rahul Jha, [17-11-2021 16:04]
+%{DATA}\|%{NOTSPACE}\s+%{NUMBER:responseCode}\s+%{DATA}\|\s+%{NUMBER:response_time}ms\s+\|\s+%{IP:clientIP}\s+\|%{NOTSPACE}\s+%{WORD:method}\s+%{NOTSPACE}\s+%{URIPATHPARAM:url}
+
+Rahul Jha, [17-11-2021 16:11]
+{"log":"[GIN] 2021/11/17 - 16:08:44 |\u001b[97;42m 200 \u001b[0m|     398.049µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:38:44.050684225Z"}
+
+Rahul Jha, [17-11-2021 16:14]
+{"log":"[GIN] 2021/11/17 - 16:10:43 |\u001b[97;42m 200 \u001b[0m|     304.233µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:40:43.056773629Z"}
+
+Rahul Jha, [17-11-2021 16:22]
+{"log" =>"%{DATA}\|%{NOTSPACE}\s+%{NUMBER:responseCode}\s+%{DATA}\|\s+%{NUMBER:response_time}ms\s+\|\s+%{IP:clientIP}\s+\|%{NOTSPACE}\s+%{WORD:method}\s+%{NOTSPACE}\s+%{URIPATHPARAM:url}"}
+
+Rahul Jha, [17-11-2021 16:24]
+{"log":"[GIN] 2021/11/17 - 16:15:42 |\u001b[97;42m 200 \u001b[0m|      373.33µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:45:42.989644804Z"}
+
+Rahul Jha, [17-11-2021 16:24]
+working
+
+Rahul Jha, [17-11-2021 16:25]
+{"log":"[GIN] 2021/11/17 - 16:16:38 |\u001b[97;42m 200 \u001b[0m|     550.911µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:46:38.652002201Z"}
+
+Rahul Jha, [17-11-2021 16:25]
+not working
+
+
+{"log" =>"%{DATA}\|%{NOTSPACE}\s+%{NUMBER:responseCode}\s+%{DATA}\|\s+%{NUMBER:response_time}ms\s+\|\s+%{IP:clientIP}\s+\|%{NOTSPACE}\s+%{WORD:method}\s+%{NOTSPACE}\s+%{URIPATHPARAM:url}"}
+
+
+{"log":"[GIN] 2021/11/17 - 16:15:42 |\u001b[97;42m 200 \u001b[0m|      373.33µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:45:42.989644804Z"}
+
+
+
+{"log":"[GIN] 2021/11/17 - 16:16:38 |\u001b[97;42m 200 \u001b[0m|     550.911µs |       10.92.5.7 |\u001b[97;46m POST    \u001b[0m /api/process/scrubbing/sms/single\r\n","stream":"stdout","time":"2021-11-17T10:46:38.652002201Z"}
+
+
+============================================================================================================
+
+if "µs" in [timeUnit]{}
+
+micro second(µs) to mili second(ms)
+
+if ("µs" in [timeUnit] ) 
+{
+ response_time = response_time/1000
+}                
+
+How to Convert Microseconds to Milliseconds
+To convert a microsecond measurement to a millisecond measurement, divide the time by the conversion ratio.
+
+Since one millisecond is equal to 1,000 microseconds, you can use this simple formula to convert:
+
+milliseconds = microseconds ÷ 1,000
+
+%{DATA}\|%{NOTSPACE}\s+%{NUMBER:responseCode}\s+%{DATA}\|\s+%{NUMBER:response_time}%{NOTSPACE:timeUnit}\s+\|\s+%{IP:clientIP}\s+\|%{NOTSPACE}\s+%{WORD:method}\s+%{NOTSPACE}\s+%{URIPATHPARAM:url}
+
+nohup bin/logstash &
+
+==========================================================================================================
+\e[0mGET /api/status \e[32m200 \e[0m4.717 ms - 23462\e[0m
+
+%{NOTSPACE}\m%{DATA:Method}\s%{DATA:Api}\s%{NOTSPACE}\m%{NUMBER:StatusCode}\s%{NOTSPACE}\m%{NUMBER:ResponseTimeInMS}\s%{DATA}.$
+
+==========================================================================================================
+Ngnix error log
+(?<timestamp>%{YEAR}[./]%{MONTHNUM}[./]%{MONTHDAY} %{TIME}) \[%{LOGLEVEL:severity}\] %{POSINT:pid}#%{NUMBER:threadid}\: \*%{NUMBER:connectionid} %{GREEDYDATA:message}, client: %{IP:client}, server: %{GREEDYDATA:server}, request: "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion}))", host: "%{DATA:host}"
+
+Ngnix Access Log
+
+NGINXACCESS - - %{USERNAME:username} \[%{HTTPDATE:timestamp}\] \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{QS:referrer} %{QS:agent} %{NUMBER:request_time} %{NUMBER:upstream_time}
+
+==========================================================================================================
+
+%{GREEDYDATA:}(2021|2022)\s+%{IP}\s+%{NOTSPACE:user_name}\s+%{NUMBER:days_left}
+
+==========================================================================================================
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+exec{command => "curl -XPOST 'https://api.sendinblue.com/v3/smtp/email' --header 'Content-Type: application/json' --header 'api-key: xkeysib-e36e3c2'}
+
+exec{command => "curl -XPOST 'https://api.sendinblue.com/v3/smtp/email' --header 'Content-Type: application/json' --header 'api-key: xkeysib-e36e3c2'}
+
+exec{command =>'curl --header "Content-Type: application/json" --request POST --data '{'api-key: xkeysib-e36e3c2'}' https://api.sendinblue.com/v3/smtp/email '}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+filebeat.inputs:
+
+- type: log
+  enabled: true
+  paths:
+    - /opt/IBM/tivoli/netcool/omnibus/log/Monitor_insert_alarms1
+  fields:
+    log_type: netcool_logs
+    key: unoc_insert_master
+    server_ip: 10.3.170.37
+  fields_under_root: true
+  scan_frequency: 1s
+  ignore_older: 23m59s
+  include_lines: ['Insert', 'ReInsert','Update of Identifier of alarm']
+
+output.redis:
+  hosts: ["10.107.146.174:6379","10.107.146.175:6379"]
+  key: "%{[key]}"
+
+
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+
+  reload.enabled: false
+
+
+
+setup.template.settings:
+  index.number_of_shards: 1
+  
+  
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+DCAP
+############################################################################################################
+OKD 3.11 => SIT,UAT/PT
+OKD 3.11 (SIT,UAT/PT) URL => https://master.okdstg.india.airtel.itm:8443/console/project/dcap-sit/overview
+User:- devops-monitoring
+Pwd:- devops@123
+************************************************************************************************************
+OKD 3.11 => Prod
+OKD 3.11 (Prod) URL =>
+############################################################################################################
+OkD 4.8 => SIT,UAT/PT
+OKD 4.8 (SIT,UAT/PT) URL => 
+Airtel Monitoring Engg
+
+https://console-openshift-console.apps.okdstgn2.india.airtel.itm/k8s/ns/dcap-sit/configmaps
+user: dcap
+pswd: dcap@123
+************************************************************************************************************
+OKD 4.8 => Prod pending on us due to lag issue
+OKD 4.8 (Prod) URL =>
+############################################################################################################
+OKD POD (Filebeat) => redis (10.222.175.105/106) => LG (10.222.175.105/106 /home/arcos_root/logstash_Dcap) => Elastic (10.222.175.87/10.222.175.90/10.222.175.91/10.222.175.92/10.222.175.93)(10.222.175.93:5601)+ Influx 10.5.98.200(DB=>DCAP_SIT,Measurements=>sit_dcap_grok),10.5.100.87(DB=>DCAP_SIT,Measurements=>sit_dcap_grok) => RT => 45 days
+
+exclude_files: ['\.gz$']
+ignore_older: 1h
+  
+a1w54z9g
+Div@2021
+
+10.222.175.87
+10.222.175.90
+10.222.175.91
+10.222.175.92
+10.222.175.93
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+
+				

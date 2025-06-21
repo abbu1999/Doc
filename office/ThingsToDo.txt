@@ -1,0 +1,33 @@
+
+Linux- user management( home directory/shell/)
+       group management 
+       firewall/selinux/iptables
+       application deployment
+       service management 
+       network management(netstat/nmcli/nslookup/dig/ip configuration)
+       log management
+       Disk management(filesystem ext3/ext4/xfs/NFS formating/mounting/resize)
+       special persmissions 
+       basic bash script
+
+ELK stack -
+
+Docker --> volume/network/image create/
+
+Ansible -> moudles 
+
+python
+
+Git
+
+
+
+
+       
+  
+
+
+
+
+
+

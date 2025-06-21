@@ -1,0 +1,56 @@
+### install via internet
+
+	yum install ansible 
+
+### install via rpm ### epel => extra packages for enterprice linux
+
+	wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+	yum install epel-release-latest-7.noarch.rpm
+
+	yum update -y
+
+	yum install git python python-level python-pip openssl ansible -y
+
+### change to ansible file
+
+	vi /etc/ansible/ansible.cfg
+
+	inventory = /etc/ansible/hosts
+	sudo-user = root
+
+### Make ansible user in ansible-server and all remote machine
+
+	usseradd ansible
+	passwd ansible
+	
+### make changes sudoers file (ansible server + remote server) ## nopasswd for if any command that need sudo paaswd then n ask for passwd
+
+	ansible    ALL=(ALL)    NOPASSWD:  ALL
+	
+###	make changes in sshd file (ansible server + remote server)
+
+	PermitRootLogin yes (uncomment)
+	PasswordAuthentication yes (uncomment)
+	PasswordAuthentication no (comment)
+	
+	systemctl restart sshd
+	
+### Make Trust Relationship (In ansible server) ###	Trust Relationship make with same user
+
+	ssh-keygen
+		press enter all time
+	cd .ssh
+		id_rsa			(privateKey)
+		id_rsa.pub		(publicKey)
+		known_hosts		(KnownIpCache)
+	
+	ssh-copy-id ansible@remoteServerIP
+	
+### Some usefull ssh comd
+
+	scp -o StrictHostKeyChecking=no username@serverIP  ### for skip yes cmd prompt of ssh
+	sshpass -p abbu@123 scp username@serverIP 	### for provide password in cmd prompt note: you need to install sshpass for this
+	sshpass -p abbu@123 scp -o StrictHostKeyChecking=no username@serverIP  ### combine both cmd
+	sshpass -f /path/to/passwordFile.txt scp -o StrictHostKeyChecking=no username@serverIP  ### combine both cmd
+	ssh -p 2895 scp -o StrictHostKeyChecking=no username@serverIP ###if ssh is configured on another port (by default 22)
